@@ -44,7 +44,8 @@ final class LinkedList<T: Hashable> {
     
     func insert(_ value: T) {
         let newNode = Node(value)
-        
+    
+        //first element
         guard head != nil else {
             head = newNode
             tail = newNode
@@ -65,6 +66,8 @@ final class LinkedList<T: Hashable> {
         
         let previousNode = oldNode.previousNode
         let nextNode = oldNode.nextNode
+        
+        //if previousNode is nil that means its the first element
         if let previousNode = previousNode {
             if tail?.value == value {
                 tail = previousNode
