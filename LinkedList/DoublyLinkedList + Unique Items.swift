@@ -16,7 +16,7 @@ final class Node<T> {
     }
 }
 
-final class LinkedList<T: Hashable> {
+final class DoublyLinkedList<T: Hashable> {
     private var head: Node<T>?
     private var tail: Node<T>?
     
@@ -92,7 +92,7 @@ final class LinkedList<T: Hashable> {
     }
 }
 
-extension LinkedList: CustomStringConvertible {
+extension DoublyLinkedList: CustomStringConvertible {
     var description: String {
         var initialWord = "["
         var node = head
