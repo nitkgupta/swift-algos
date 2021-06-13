@@ -6,8 +6,6 @@
 
 import Foundation
 
-import Foundation
-
 final class Node<T> {
     let value: T
     weak var previousNode: Node<T>?
@@ -89,7 +87,6 @@ final class LinkedList<T: Hashable> {
         _privateDict.removeValue(forKey: element)
         if nextNode == nil {
             tail = nil
-            head = nil
         }
         return element
     }
