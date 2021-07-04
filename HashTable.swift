@@ -1,6 +1,5 @@
 //
 //  HashTable.swift
-//  Swift-KeyPath-Example
 //
 //  Created by Nitkarsh Gupta on 03/07/21.
 //
