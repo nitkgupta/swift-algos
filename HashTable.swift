@@ -51,10 +51,6 @@ final class HashTable<K, V> where K: Hashable {
     }
     
     func getIndex(_ key: K) -> Int {
-        //manually creating collision
-        if key.hashValue == 5.hashValue || key.hashValue == 6.hashValue {
-            return abs(1.hashValue % maxValues)
-        }
         let initialValue = key.hashValue
         return abs(initialValue % maxValues)
     }
