@@ -6,6 +6,12 @@
 
 import Foundation
 
+enum TraversalTechnique {
+    case inorder
+    case preorder
+    case postorder
+}
+
 ///Element representing a node with left and right child
 private class BinarySearchElement<T> {
     init(_ value: T) {
@@ -25,7 +31,7 @@ private class BinarySearchElement<T> {
     }
 }
 
-class BinarySearchTree<T> where T: Comparable {
+final class BinarySearchTree<T> where T: Comparable {
     private var root: BinarySearchElement<T>?
     
     var min: T? {
@@ -55,6 +61,17 @@ class BinarySearchTree<T> where T: Comparable {
     
     func delete(_ value: T) {
         root = self.delete(value: value, entry: &root)
+    }
+    
+    func traverse(in technique: TraversalTechnique) {
+        switch technique {
+        case .inorder:
+            inorderTranversal(root)
+        case .preorder:
+            preorderTranversal(root)
+        case .postorder:
+            postorderTranversal(root)
+        }
     }
 }
 
@@ -134,5 +151,29 @@ extension BinarySearchTree {
     
     private func findMin(entry: BinarySearchElement<T>) -> BinarySearchElement<T> {
         return entry.minimum
+    }
+    
+    private func inorderTranversal(_ element: BinarySearchElement<T>?) {
+        guard let uElement = element else { return }
+        
+        inorderTranversal(uElement.left)
+        print(uElement.value)
+        inorderTranversal(uElement.right)
+    }
+    
+    private func preorderTranversal(_ element: BinarySearchElement<T>?) {
+        guard let uElement = element else { return }
+        
+        print(uElement.value)
+        preorderTranversal(uElement.left)
+        preorderTranversal(uElement.right)
+    }
+    
+    private func postorderTranversal(_ element: BinarySearchElement<T>?) {
+        guard let uElement = element else { return }
+        
+        postorderTranversal(uElement.left)
+        postorderTranversal(uElement.right)
+        print(uElement.value)
     }
 }
