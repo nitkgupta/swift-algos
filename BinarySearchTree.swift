@@ -15,6 +15,14 @@ private class BinarySearchElement<T> {
     var value: T
     var left: BinarySearchElement?
     var right: BinarySearchElement?
+    
+    var minimum: Self {
+        if self.left != nil {
+            return self.left?.minimum as! Self
+        } else {
+            return self
+        }
+    }
 }
 
 class BinarySearchTree<T> where T: Comparable {
@@ -43,6 +51,10 @@ class BinarySearchTree<T> where T: Comparable {
                 entry.right = newElement
             }
         }
+    }
+    
+    func delete(_ value: T) {
+        root = self.delete(value: value, entry: &root)
     }
 }
 
@@ -82,5 +94,45 @@ extension BinarySearchTree {
             }
         }
         return entry
+    }
+    
+    private func delete(value: T, entry: inout BinarySearchElement<T>?) -> BinarySearchElement<T>? {
+        guard let uEntry = entry else { return nil }
+        
+        if value > uEntry.value {
+            entry = self.delete(value: value, entry: &uEntry.right)
+        } else if value < uEntry.value {
+            entry = self.delete(value: value, entry: &uEntry.left)
+        } else {
+            
+            //Not having any branches
+            if uEntry.left == nil, uEntry.right == nil {
+                entry = nil
+            }
+            
+            //Having either only left or right branch
+            else if uEntry.left != nil {
+                entry = uEntry.left
+            } else if uEntry.right != nil {
+                entry = uEntry.right
+            }
+            
+            /* having 2 branches:
+             * In this case we will tranverse and find min of right branch
+             * Replace the element found with the element matching
+             * delete the min right side node
+             */
+  
+            else {
+                let minRight = findMin(entry: uEntry.right!)
+                uEntry.value = minRight.value
+                uEntry.right = delete(value: minRight.value, entry: &uEntry.right)
+            }
+        }
+        return entry
+    }
+    
+    private func findMin(entry: BinarySearchElement<T>) -> BinarySearchElement<T> {
+        return entry.minimum
     }
 }
